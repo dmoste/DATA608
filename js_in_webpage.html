@@ -1,0 +1,66 @@
+<head><title>Intro to JS in a Browser</title></head>
+
+<body>
+
+<h1>Choose your function</h1>
+<h3>Enter a word and it shall be reversed.</h3>
+<h3>Enter a number and obtain the first 20 multiples.</h3>
+<h3>Click to get data on presidents.</h3>
+
+<script src="https://d3js.org/d3.v6.js"></script>
+
+<script type="text/javascript">
+function reverse(){
+    var t = document.getElementById("word_target");
+    var word = document.getElementById("word").value;
+
+    var i;
+    var new_word = "";
+    for (i = word.length-1; i >= 0; i--) {
+  	new_word += word[i];
+    }
+    t.innerHTML = new_word;
+}
+
+function multiples(){
+    var t = document.getElementById("num_target");
+    var num = document.getElementById("num").value;
+
+    t.innerHTML = "";
+
+    for (var i = 0; i < 5; i++){
+        var tr = document.createElement("tr");
+        for (var j = 0; j < 4; j++){
+            var td = document.createElement("td");
+            td.appendChild(document.createTextNode((j+1+(4*i))*num));
+            tr.appendChild(td);
+        }
+        t.appendChild(tr);
+    }
+    t.appendChild(t);
+}
+
+function getInfo(){
+    var data = d3.csv("https://raw.githubusercontent.com/charleyferrari/CUNY_DATA_608/master/module5/data/presidents.csv", function(data){
+        console.log(data);
+    });
+}
+</script>
+
+<p>
+<form>
+    <input id="word" type="text" size="20">
+    <input type="button" value="Reverse Word" onClick="reverse();">
+
+    <input id="num" type="number" size="4">
+    <input type="button" value="Get Multiples" onClick="multiples();">
+
+    <input type="button" value="President Info" onClick="getInfo();">
+</form>
+</p>
+
+<div id="word_target"></div>
+<table id="num_target"></table>
+
+</body>
+</html>
